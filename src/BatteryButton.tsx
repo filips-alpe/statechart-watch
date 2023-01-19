@@ -1,4 +1,4 @@
-import cn from './classNames';
+import cn from './classNames.ts';
 
 const BatteryButton = function BatteryButton({ state, send }) {
   const isAlive = state.matches('alive');

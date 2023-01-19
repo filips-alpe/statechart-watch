@@ -1,6 +1,6 @@
 import beepText from './assets/beep_text.svg';
 import beepLines from './assets/beep_lines.svg';
-import cn from './classNames';
+import cn from './classNames.ts';
 
 const BeepLabel = function BeepLabel({ state }) {
   const beepStates = [
