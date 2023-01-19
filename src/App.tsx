@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import WatchCase from './Watch';
 
 function App() {

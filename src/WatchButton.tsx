@@ -1,3 +1,4 @@
+import * as React from 'react';
 import cn from './classNames';
 
 const WatchButton = (function makeWatchButton() {

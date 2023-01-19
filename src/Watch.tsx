@@ -1,5 +1,5 @@
 import './Watch.scss';
-import React from 'react';
+import * as React from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { useKeyDown, useKeyUp } from './extras';
 import { watchCaseMachine } from './watchCaseMachine';

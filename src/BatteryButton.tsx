@@ -1,3 +1,4 @@
+import * as React from 'react';
 import cn from './classNames.ts';
 
 const BatteryButton = function BatteryButton({ state, send }) {

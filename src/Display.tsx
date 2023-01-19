@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import cn from './classNames';
 import colon from './assets/colon.svg';
 import period from './assets/period.svg';
@@ -290,12 +290,12 @@ const AlarmDisplay = function AlarmDisplay({ state, alarmNumber }) {
   );
 };
 
-const Alarm1Display = function Alarm1Display({ alarmNumber, ...props }) {
-  return <AlarmDisplay alarmNumber={1} {...props} />;
+const Alarm1Display = function Alarm1Display(props) {
+  return <AlarmDisplay {...props} alarmNumber={1} />;
 };
 
-const Alarm2Display = function Alarm2Display({ alarmNumber, ...props }) {
-  return <AlarmDisplay alarmNumber={2} {...props} />;
+const Alarm2Display = function Alarm2Display(props) {
+  return <AlarmDisplay {...props} alarmNumber={2} />;
 };
 
 const ChimeDisplay = function ChimeDisplay({ state }) {

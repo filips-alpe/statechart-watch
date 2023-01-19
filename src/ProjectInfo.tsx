@@ -1,3 +1,4 @@
+import * as React from 'react';
 import happyPiggy from './assets/happy_piggy.png';
 import pig31Text from './assets/pig_31_text.svg';
 import cn from './classNames';

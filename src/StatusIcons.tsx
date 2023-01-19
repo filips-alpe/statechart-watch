@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import cn from './classNames';
 import { ReactComponent as IconAlarm1 } from './assets/alarm_1.svg';
 import { ReactComponent as IconAlarm2 } from './assets/alarm_2.svg';

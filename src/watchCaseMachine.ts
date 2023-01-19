@@ -1,7 +1,7 @@
 import { createMachine, actions } from 'xstate';
 const { assign, send, pure } = actions;
 
-const seconds = function seconds(num) {
+const seconds = function seconds(num: number) {
   return num * 1000;
 };
 const IDLENESS_DELAY = seconds(120);
@@ -15,69 +15,68 @@ const INITIAL_STOPWATCH_CONTEXT = {
 const MIN_YEAR = 1979;
 const MAX_YEAR = 2009;
 const INITIAL_YEAR = MIN_YEAR;
-const incrementByOneSec = function incrementByOneSec(sec) {
+const incrementByOneSec = function incrementByOneSec(sec: number) {
   return (sec + 1) % 60;
 };
-const incrementByOneMin = function incrementByOneMin(min) {
+const incrementByOneMin = function incrementByOneMin(min: number) {
   return (min + 1) % 10;
 };
-const incrementByTenMin = function incrementByTenMin(min) {
+const incrementByTenMin = function incrementByTenMin(min: number) {
   return (min + 1) % 6;
 };
-const incrementByOneHour = function incrementByOneHour(hr, hourMode24 = true) {
+const incrementByOneHour = function incrementByOneHour(
+  hr: number,
+  hourMode24 = true
+) {
   if (hourMode24) {
     return (hr + 1) % 24;
   }
 };
 
-const incrementMonth = function incrementMonth(month) {
+const incrementMonth = function incrementMonth(month: number) {
   return (month + 1) % 12;
 };
-const incrementDate = function incrementDate(date, month) {
+const incrementDate = function incrementDate(date: number, month: number) {
   return (date + 1) % daysInMonth(month);
 };
-const incrementDay = function incrementDay(day) {
+const incrementDay = function incrementDay(day: number) {
   return (day + 1) % 7;
 };
-const incrementYear = function incrementYear(year) {
+const incrementYear = function incrementYear(year: number) {
   const incremented = year + 1;
   return (
     MIN_YEAR + (Math.max(0, incremented - MIN_YEAR) % (MAX_YEAR - MIN_YEAR + 1))
   );
 };
 
-const daysInMonth = function daysInMonth(monthIndex) {
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  const monthKey = months[monthIndex].toLowerCase();
+const daysInMonth = function daysInMonth(monthIndex: number) {
   const daysPerMonth = {
-    jan: 31,
-    feb: 29,
-    mar: 31,
-    apr: 30,
-    may: 31,
-    jun: 30,
-    jul: 31,
-    aug: 31,
-    sep: 30,
-    oct: 31,
-    nov: 30,
-    dec: 31,
-  };
-  return daysPerMonth[monthKey];
+    0: 31, // Jan
+    1: 29, // Feb
+    2: 31, // Mar
+    3: 30, // Apr
+    4: 31, // May
+    5: 30, // Jun
+    6: 31, // Jul
+    7: 31, // Aug
+    8: 30, // Sep
+    9: 31, // Oct
+    10: 30, // Nov
+    11: 31, // Dec
+  } as const;
+  return daysPerMonth[monthIndex as keyof typeof daysInMonth];
 };
+
+interface Time {
+  sec: number;
+  oneMin: number;
+  tenMin: number;
+  hr: number;
+  mon: number;
+  date: number;
+  day: number;
+  year: number;
+}
 
 const getTimeAfterTick = function getTimeAfterTick({
   sec,
@@ -89,8 +88,11 @@ const getTimeAfterTick = function getTimeAfterTick({
   day,
   year,
   ...rest
-}) {
-  const crossedBorderline = function crossedBorderline(time, newTime) {
+}: Time) {
+  const crossedBorderline = function crossedBorderline(
+    time: number,
+    newTime: number
+  ) {
     return time !== newTime && newTime === 0;
   };
 
@@ -124,7 +126,7 @@ const getTimeAfterTick = function getTimeAfterTick({
   };
 };
 
-const areTimesEqual = function areTimesEqual(a, b) {
+const areTimesEqual = function areTimesEqual(a: Time, b: Time) {
   return (
     a.sec === b.sec &&
     a.oneMin === b.oneMin &&
@@ -133,11 +135,13 @@ const areTimesEqual = function areTimesEqual(a, b) {
   );
 };
 
-const isWholeHour = function isWholeHour(time) {
+const isWholeHour = function isWholeHour(time: Time) {
   return time.sec === 0 && time.oneMin === 0 && time.tenMin === 0;
 };
 
-const createTimeIncrementActions = function createTimeIncrementActions(name) {
+const createTimeIncrementActions = function createTimeIncrementActions(
+  name: 'T' | 'T1' | 'T2'
+) {
   return {
     [`increment${name}ByOneSec`]: assign({
       [name]: (ctx) => ({

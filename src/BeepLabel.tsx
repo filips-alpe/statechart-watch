@@ -1,3 +1,4 @@
+import * as React from 'react';
 import beepText from './assets/beep_text.svg';
 import beepLines from './assets/beep_lines.svg';
 import cn from './classNames.ts';
