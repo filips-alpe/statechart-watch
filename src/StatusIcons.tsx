@@ -92,7 +92,7 @@ const StopwatchStatus = function StopwatchStatus({ state, ...props }) {
   }
 };
 
-const StatusIcons = function StatusIcons({ state }) {
+export const StatusIcons = function StatusIcons({ state }) {
   return (
     <>
       <Alarm1Status state={state} className="alarm1-icon" />
@@ -102,5 +102,3 @@ const StatusIcons = function StatusIcons({ state }) {
     </>
   );
 };
-
-export default StatusIcons;

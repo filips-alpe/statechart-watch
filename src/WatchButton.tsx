@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cn from './classNames';
 
-const WatchButton = (function makeWatchButton() {
+export const WatchButton = (function makeWatchButton() {
   const types = ['a', 'b', 'c', 'd'];
   const events = types.reduce((result, type) => {
     result[type] = {
@@ -25,5 +25,3 @@ const WatchButton = (function makeWatchButton() {
     );
   };
 })();
-
-export default WatchButton;

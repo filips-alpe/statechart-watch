@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const BatteryButton = function BatteryButton({ state, send }) {
+export function BatteryButton({ state, send }) {
   const isAlive = state.matches('alive');
   const elButton = isAlive ? (
     <button className="battery-button" onClick={() => send('REMOVE_BATTERY')}>
@@ -12,6 +12,4 @@ const BatteryButton = function BatteryButton({ state, send }) {
     </button>
   );
   return <div className="battery-button-container">{elButton}</div>;
-};
-
-export default BatteryButton;
+}

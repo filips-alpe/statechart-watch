@@ -23,7 +23,7 @@ const removeAlivePrefix = (function makeRemoveAlivePrefix() {
   };
 })();
 
-const StateInfo = function StateInfo({ state }) {
+export const StateInfo = function StateInfo({ state }) {
   const { context } = state;
   const { T, T1, T2, stopwatch, ...rest } = context;
   const contextObjects = { T, T1, T2, stopwatch, rest };
@@ -52,5 +52,3 @@ const StateInfo = function StateInfo({ state }) {
     </div>
   );
 };
-
-export default StateInfo;

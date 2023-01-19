@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import WatchCase from './Watch';
+import { WatchCase } from './Watch';
 
 function App() {
   return <WatchCase />;

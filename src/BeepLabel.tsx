@@ -2,7 +2,7 @@ import * as React from 'react';
 import beepText from './assets/beep_text.svg';
 import beepLines from './assets/beep_lines.svg';
 
-const BeepLabel = function BeepLabel({ state }) {
+export function BeepLabel({ state }) {
   const beepStates = [
     'alive.main.displays.regularAndBeep.beep-test.beep',
     'alive.main.alarms-beep',
@@ -18,6 +18,4 @@ const BeepLabel = function BeepLabel({ state }) {
       <img className="beep-lines" src={beepLines} alt="Beep lines" />
     </div>
   );
-};
-
-export default BeepLabel;
+}

@@ -402,7 +402,7 @@ const Displays = {
   Stopwatch,
 };
 
-const Display = function Display({ state }) {
+export const Display = function Display({ state }) {
   const states = {
     regular: 'alive.main.displays.regularAndBeep.regular',
     wait: 'alive.main.displays.wait',
@@ -422,5 +422,3 @@ const Display = function Display({ state }) {
 
   return displays[currentState] || displays.regular;
 };
-
-export default Display;

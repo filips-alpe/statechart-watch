@@ -3,16 +3,16 @@ import * as React from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { useKeyDown, useKeyUp } from './extras';
 import { watchCaseMachine } from './watchCaseMachine';
-import StatusIcons from './StatusIcons';
-import StateInfo from './StateInfo';
-import BeepLabel from './BeepLabel';
-import BatteryButton from './BatteryButton';
-import WatchButton from './WatchButton';
-import Display from './Display';
+import { StatusIcons } from './StatusIcons';
+import { StateInfo } from './StateInfo';
+import { BeepLabel } from './BeepLabel';
+import { BatteryButton } from './BatteryButton';
+import { WatchButton } from './WatchButton';
+import { Display } from './Display';
 import figure31 from './assets/figure_31.png';
 import { ReactComponent as FaceBackground } from './assets/face.svg';
 
-const WatchCase = function WatchCase() {
+export const WatchCase = function WatchCase() {
   const [state, send] = useMachine(watchCaseMachine);
   const watchRef = state?.children?.watch;
   const watchEl = watchRef ? <Watch watchRef={watchRef} /> : <DeadWatch />;
@@ -90,5 +90,3 @@ const Face = function Face({ state }) {
     </div>
   );
 };
-
-export default WatchCase;
