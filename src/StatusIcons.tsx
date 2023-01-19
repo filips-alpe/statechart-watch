@@ -41,12 +41,12 @@ const AlarmStatus = function AlarmStatus({
   }
 };
 
-const Alarm1Status = function Alarm1Status({ state, ...props }) {
-  return <AlarmStatus alarmNumber={1} state={state} {...props} />;
+const Alarm1Status = function Alarm1Status(props) {
+  return <AlarmStatus alarmNumber={1} {...props} />;
 };
 
-const Alarm2Status = function Alarm2Status({ state, ...props }) {
-  return <AlarmStatus alarmNumber={2} state={state} {...props} />;
+const Alarm2Status = function Alarm2Status(props) {
+  return <AlarmStatus alarmNumber={2} {...props} />;
 };
 
 const ChimeStatus = function ChimeStatus({ state, ...props }) {

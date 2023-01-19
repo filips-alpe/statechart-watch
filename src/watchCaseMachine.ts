@@ -31,6 +31,7 @@ const incrementByOneHour = function incrementByOneHour(
   if (hourMode24) {
     return (hr + 1) % 24;
   }
+  return (hr + 1) % 12;
 };
 
 const incrementMonth = function incrementMonth(month: number) {
@@ -77,10 +78,10 @@ const getTimeAfterTick = function getTimeAfterTick({
   day,
   year,
   ...rest
-}: MainTime) {
+}: TimeWithDate): TimeWithDate {
   const crossedBorderline = function crossedBorderline(
     time: number,
-    newTime: number | undefined
+    newTime: number
   ) {
     return time !== newTime && newTime === 0;
   };
@@ -128,7 +129,16 @@ const isWholeHour = function isWholeHour(time: Time) {
   return time.sec === 0 && time.oneMin === 0 && time.tenMin === 0;
 };
 
-interface MainTime extends Time {
+export interface Time {
+  sec: number;
+  oneMin: number;
+  tenMin: number;
+  hr: number;
+}
+
+export type TimeDisplayMode = '12h' | '24h';
+
+export interface TimeWithDate extends Time {
   mon: number;
   date: number;
   day: number;
@@ -136,17 +146,8 @@ interface MainTime extends Time {
   mode: TimeDisplayMode;
 }
 
-export type TimeDisplayMode = '12h' | '24h';
-
-interface Time {
-  sec: number;
-  oneMin: number;
-  tenMin: number;
-  hr: number;
-}
-
 interface WatchCaseMachineContext {
-  T: MainTime;
+  T: TimeWithDate;
   T1: Time;
   T2: Time;
   stopwatch: {
