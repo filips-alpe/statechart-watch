@@ -5,7 +5,6 @@ import { useKeyDown, useKeyUp } from './extras';
 import { watchCaseMachine } from './watchCaseMachine';
 import StatusIcons from './StatusIcons';
 import StateInfo from './StateInfo';
-import ProjectInfo from './ProjectInfo';
 import BeepLabel from './BeepLabel';
 import BatteryButton from './BatteryButton';
 import WatchButton from './WatchButton';
@@ -20,7 +19,6 @@ const WatchCase = function WatchCase() {
 
   return (
     <div className="container">
-      <ProjectInfo />
       {watchEl}
       <BatteryButton state={state} send={send} />
       <img

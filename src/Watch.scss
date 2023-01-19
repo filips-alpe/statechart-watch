@@ -30,14 +30,13 @@ a {
 
   --columns_small: 100%;
   --rows_small: auto 132px 419px auto auto;
-  --areas_small: 'project-info' 'beep' 'face-and-buttons' 'battery-button'
-    'state-info' 'fig-31';
+  --areas_small: 'beep' 'face-and-buttons' 'battery-button' 'state-info'
+    'fig-31';
 
   --min-height_default: 100vh;
   --columns_default: 430px min(72px, 3vw) 1fr;
   --rows_default: auto 132px auto auto 1fr auto auto;
-  --areas_default: 'project-info project-info project-info project-info'
-    'state-info . beep .' 'state-info . face-and-buttons .'
+  --areas_default: 'state-info . beep .' 'state-info . face-and-buttons .'
     'state-info . battery-button .' 'state-info . . . '
     'fig-31 fig-31 fig-31 fig-31';
   --row-gap_default: 24px;
@@ -58,27 +57,6 @@ a {
   grid-template-areas: var(--areas_default);
   row-gap: var(--row-gap_default);
   place-content: center;
-}
-
-.project-info {
-  grid-area: project-info;
-
-  display: grid;
-  gap: 24px;
-  justify-items: center;
-}
-
-.piggy-and-text {
-  display: grid;
-  justify-items: center;
-}
-
-.description {
-  width: unquote('min(90vw, 400px)');
-  text-align: center;
-  line-height: 1.4375;
-  display: grid;
-  gap: 16px;
 }
 
 .state-info {
@@ -459,10 +437,6 @@ a {
   grid-area: fig-31;
 }
 
-.happy-piggy {
-  width: 128px;
-}
-
 @keyframes blink {
   0%,
   45.8333333% {
@@ -508,20 +482,6 @@ a {
     grid-template-rows: var(--rows_large);
     grid-template-columns: var(--columns_large);
     grid-template-areas: var(--areas_large);
-  }
-
-  .project-info {
-    width: 160px;
-    align-self: start;
-    justify-self: end;
-    grid-column: -3 / -1;
-    grid-row: 1 / span 3;
-    justify-items: end;
-  }
-
-  .description {
-    width: unset;
-    text-align: right;
   }
 }
 
