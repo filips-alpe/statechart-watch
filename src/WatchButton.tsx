@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cn from './classNames';
 
 export const WatchButton = (function makeWatchButton() {
   const types = ['a', 'b', 'c', 'd'];
@@ -18,7 +17,7 @@ export const WatchButton = (function makeWatchButton() {
         onPointerDown={() => send(events[type].pointerDown)}
         onPointerUp={() => send(events[type].pointerUp)}
         onPointerCancel={() => send(events[type].pointerCancel)}
-        className={cn(`button-${type}`)}
+        className={`button-${type}`}
       >
         {label}
       </button>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cn from './classNames';
 
 const formatContextObject = (function makeFormatContextObject() {
   const tabSeparatedObjects = ['T', 'T1', 'T2'];
@@ -31,7 +30,7 @@ export const StateInfo = function StateInfo({ state }) {
     const formattedObjectValues = formatContextObject(contextObjects[key], key);
     const text = [key, formattedObjectValues].join('\n');
     return (
-      <div className={cn(`state-info-context-${key}`)} key={i}>
+      <div className={`state-info-context-${key}`} key={i}>
         {text}
       </div>
     );
