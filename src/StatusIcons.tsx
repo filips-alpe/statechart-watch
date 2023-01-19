@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cn from './classNames';
 import { ReactComponent as IconAlarm1 } from './assets/alarm_1.svg';
 import { ReactComponent as IconAlarm2 } from './assets/alarm_2.svg';
 import { ReactComponent as IconChime } from './assets/chime.svg';
@@ -11,7 +10,13 @@ const timeDisplayStates = [
 ];
 const alarmsBeepState = 'alive.main.alarms-beep';
 
-const AlarmStatus = function AlarmStatus({ state, alarmNumber, ...props }) {
+const AlarmStatus = function AlarmStatus({
+  state,
+  alarmNumber,
+  ...props
+}: {
+  alarmNumber: 1 | 2;
+}) {
   const iconStates = {
     enabled: `alive.alarm-${alarmNumber}-status.enabled`,
     blinking: [
@@ -90,10 +95,10 @@ const StopwatchStatus = function StopwatchStatus({ state, ...props }) {
 const StatusIcons = function StatusIcons({ state }) {
   return (
     <>
-      <Alarm1Status state={state} className={cn('alarm1-icon')} />
-      <Alarm2Status state={state} className={cn('alarm2-icon')} />
-      <ChimeStatus state={state} className={cn('chime-icon')} />
-      <StopwatchStatus state={state} className={cn('stopwatch-icon')} />
+      <Alarm1Status state={state} className="alarm1-icon" />
+      <Alarm2Status state={state} className="alarm2-icon" />
+      <ChimeStatus state={state} className="chime-icon" />
+      <StopwatchStatus state={state} className="stopwatch-icon" />
     </>
   );
 };

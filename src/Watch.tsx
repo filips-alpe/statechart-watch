@@ -4,7 +4,6 @@ import { useMachine, useActor } from '@xstate/react';
 import { useKeyDown, useKeyUp } from './extras';
 import { watchCaseMachine } from './watchCaseMachine';
 import StatusIcons from './StatusIcons';
-import cn from './classNames';
 import StateInfo from './StateInfo';
 import ProjectInfo from './ProjectInfo';
 import BeepLabel from './BeepLabel';
@@ -20,12 +19,12 @@ const WatchCase = function WatchCase() {
   const watchEl = watchRef ? <Watch watchRef={watchRef} /> : <DeadWatch />;
 
   return (
-    <div className={cn('container')}>
+    <div className="container">
       <ProjectInfo />
       {watchEl}
       <BatteryButton state={state} send={send} />
       <img
-        className={cn('figure-31')}
+        className="figure-31"
         src={figure31}
         alt="Figure 31 from Harel's statecharts paper"
       />
@@ -35,7 +34,7 @@ const WatchCase = function WatchCase() {
 
 const DeadWatch = function DeadWatch() {
   return (
-    <div className={cn('face-and-buttons')}>
+    <div className="face-and-buttons">
       <Face />
     </div>
   );
@@ -50,7 +49,7 @@ const Watch = function Watch({ watchRef }) {
     <>
       <StateInfo state={state} />
       <BeepLabel state={state} />
-      <div className={cn('face-and-buttons')}>
+      <div className="face-and-buttons">
         <Face state={state} />
         <WatchButton type="a" send={send}>
           a
@@ -81,12 +80,12 @@ const Face = function Face({ state }) {
   }
 
   return (
-    <div className={cn('face')}>
+    <div className="face">
       <FaceBackground
         data-state-light={lightState}
-        className={cn('face-background')}
+        className="face-background"
       />
-      <div className={cn('displays')}>
+      <div className="displays">
         {elStatusIcons}
         {elDisplay}
       </div>

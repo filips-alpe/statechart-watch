@@ -1,7 +1,6 @@
 import * as React from 'react';
 import beepText from './assets/beep_text.svg';
 import beepLines from './assets/beep_lines.svg';
-import cn from './classNames.ts';
 
 const BeepLabel = function BeepLabel({ state }) {
   const beepStates = [
@@ -14,9 +13,9 @@ const BeepLabel = function BeepLabel({ state }) {
   const dataStateBeep = isBeeping ? 'beeping' : undefined;
 
   return (
-    <div data-state-beep={dataStateBeep} className={cn('beep-container')}>
-      <img className={cn('beep-text')} src={beepText} alt="Beep text" />
-      <img className={cn('beep-lines')} src={beepLines} alt="Beep lines" />
+    <div data-state-beep={dataStateBeep} className="beep-container">
+      <img className="beep-text" src={beepText} alt="Beep text" />
+      <img className="beep-lines" src={beepLines} alt="Beep lines" />
     </div>
   );
 };

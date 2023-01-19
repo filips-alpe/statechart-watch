@@ -1,5 +1,4 @@
 import * as React from 'react';
-import cn from './classNames';
 import colon from './assets/colon.svg';
 import period from './assets/period.svg';
 import prime from './assets/prime.svg';
@@ -7,72 +6,65 @@ import doublePrime from './assets/double_prime.svg';
 import weakBattery from './assets/weak_battery.svg';
 import am from './assets/am.svg';
 import pm from './assets/pm.svg';
+import { TimeDisplayMode } from './watchCaseMachine';
 
 const Colon = function Colon() {
-  return <img className={cn('colon-icon')} src={colon} alt="Colon" />;
+  return <img className="colon-icon" src={colon} alt="Colon" />;
 };
 
 const WeakBattery = function WeakBattery() {
   return (
-    <img
-      className={cn('weak-battery-icon')}
-      src={weakBattery}
-      alt="Weak battery"
-    />
+    <img className="weak-battery-icon" src={weakBattery} alt="Weak battery" />
   );
 };
 
 const Primes = function Primes() {
   return (
     <>
-      <img className={cn('prime-icon')} src={prime} alt="Prime" />
-      <img
-        className={cn('double-prime-icon')}
-        src={doublePrime}
-        alt="Double prime"
-      />
+      <img className="prime-icon" src={prime} alt="Prime" />
+      <img className="double-prime-icon" src={doublePrime} alt="Double prime" />
     </>
   );
 };
 
 const Period = function Period() {
-  return <img className={cn('period-icon')} src={period} alt="Period" />;
+  return <img className="period-icon" src={period} alt="Period" />;
 };
 
 const AM = function AM() {
-  return <img className={cn('am-icon')} src={am} alt="AM symbol" />;
+  return <img className="am-icon" src={am} alt="AM symbol" />;
 };
 
 const PM = function PM() {
-  return <img className={cn('pm-icon')} src={pm} alt="PM symbol" />;
+  return <img className="pm-icon" src={pm} alt="PM symbol" />;
 };
 
-const Digits1 = function Digits1({ children }) {
-  return <div className={cn('digits1')}>{children}</div>;
+const Digits1 = function Digits1({ children }: React.PropsWithChildren) {
+  return <div className="digits1">{children}</div>;
 };
 
-const Digits2 = function Digits2({ children }) {
-  return <div className={cn('digits2')}>{children}</div>;
+const Digits2 = function Digits2({ children }: React.PropsWithChildren) {
+  return <div className="digits2">{children}</div>;
 };
 
-const Digits3 = function Digits3({ children }) {
-  return <div className={cn('digits3')}>{children}</div>;
+const Digits3 = function Digits3({ children }: React.PropsWithChildren) {
+  return <div className="digits3">{children}</div>;
 };
 
-const LCD = function LCD({ state, children }) {
+const LCD = function LCD({ state, children }: React.PropsWithChildren) {
   const weakBatteryState = 'alive.power.blink';
   const isWeakBattery = state.matches(weakBatteryState);
   const weakBatteryIndicator = isWeakBattery ? <WeakBattery /> : undefined;
 
   return (
-    <div className={cn('display')}>
+    <div className="display">
       {weakBatteryIndicator}
       {children}
     </div>
   );
 };
 
-const formatHr = function formatHr(mode, hr) {
+const formatHr = function formatHr(mode: TimeDisplayMode, hr: number) {
   if (mode === '24h') {
     return hr;
   }
@@ -86,11 +78,11 @@ const formatHr = function formatHr(mode, hr) {
 };
 
 const getPeriodIndicator = (function makeGetPeriodIndicator() {
-  const isPM = function isPM(hr) {
+  const isPM = function isPM(hr: number) {
     return Math.floor(hr / 12) >= 1;
   };
 
-  return function getPeriodIndicator(mode, hr) {
+  return function getPeriodIndicator(mode: TimeDisplayMode, hr: number) {
     if (mode === '24h') {
       return undefined;
     }
@@ -136,7 +128,7 @@ const DateDisplay = function DateDisplay({ state }) {
 const TimeUpdateDisplay = function TimeUpdateDisplay({ state, updateState }) {
   const { sec, oneMin, tenMin, hr, mode } = state.context.T;
   const classNames = ['sec', '1min', '10min', 'hr'].reduce((result, el) => {
-    result[el] = el === updateState ? cn(null, 'blinking') : undefined;
+    result[el] = el === updateState ? 'blinking' : undefined;
     return result;
   }, {});
   const formattedHr = formatHr(mode, hr);
@@ -164,7 +156,7 @@ const DateUpdateDisplay = function DateUpdateDisplay({ state, updateState }) {
   const { mon, date, day } = state.context.T;
   const days = ['Mo', 'Tu', 'We', 'Th', 'fr', 'sa', 'su'];
   const classNames = ['mon', 'date', 'day'].reduce((result, el) => {
-    result[el] = el === updateState ? cn(null, 'blinking') : undefined;
+    result[el] = el === updateState ? 'blinking' : undefined;
     return result;
   }, {});
   return (
@@ -189,10 +181,10 @@ const YearUpdateDisplay = function YearUpdateDisplay({ state, updateState }) {
   return (
     <LCD state={state}>
       <Digits2>
-        <span className={cn(null, 'blinking')}>{firstTwoDigits}</span>
+        <span className="blinking">{firstTwoDigits}</span>
       </Digits2>
       <Digits3>
-        <span className={cn(null, 'blinking')}>{lastTwoDigits}</span>
+        <span className="blinking">{lastTwoDigits}</span>
       </Digits3>
     </LCD>
   );
@@ -204,7 +196,7 @@ const ModeUpdateDisplay = function ModeUpdateDisplay({ state, updateState }) {
   return (
     <LCD state={state}>
       <Digits1>
-        <span className={cn(null, 'blinking')}>{modeDigits}</span>
+        <span className="blinking">{modeDigits}</span>
       </Digits1>
       <Digits2>h</Digits2>
     </LCD>
@@ -264,7 +256,7 @@ const AlarmDisplay = function AlarmDisplay({ state, alarmNumber }) {
   const isEnabled = state.matches(`alive.alarm-${alarmNumber}-status.enabled`);
   const statusLabel = isEnabled ? 'on' : 'of';
   const classNames = Object.keys(states).reduce((result, el) => {
-    result[el] = el === currentState ? cn(null, 'blinking') : undefined;
+    result[el] = el === currentState ? 'blinking' : undefined;
     return result;
   }, {});
   const formattedHr = formatHr(mode, hr);
@@ -313,7 +305,7 @@ const ChimeDisplay = function ChimeDisplay({ state }) {
       <Colon />
       <Digits2>00</Digits2>
       <Digits3>
-        <span className={cn(null, 'blinking')}>{statusLabel}</span>
+        <span className="blinking">{statusLabel}</span>
       </Digits3>
     </LCD>
   );

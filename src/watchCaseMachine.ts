@@ -67,17 +67,6 @@ const daysInMonth = function daysInMonth(monthIndex: number) {
   return daysPerMonth[monthIndex as keyof typeof daysInMonth];
 };
 
-interface Time {
-  sec: number;
-  oneMin: number;
-  tenMin: number;
-  hr: number;
-  mon: number;
-  date: number;
-  day: number;
-  year: number;
-}
-
 const getTimeAfterTick = function getTimeAfterTick({
   sec,
   oneMin,
@@ -88,10 +77,10 @@ const getTimeAfterTick = function getTimeAfterTick({
   day,
   year,
   ...rest
-}: Time) {
+}: MainTime) {
   const crossedBorderline = function crossedBorderline(
     time: number,
-    newTime: number
+    newTime: number | undefined
   ) {
     return time !== newTime && newTime === 0;
   };
@@ -139,29 +128,60 @@ const isWholeHour = function isWholeHour(time: Time) {
   return time.sec === 0 && time.oneMin === 0 && time.tenMin === 0;
 };
 
+interface MainTime extends Time {
+  mon: number;
+  date: number;
+  day: number;
+  year: number;
+  mode: TimeDisplayMode;
+}
+
+export type TimeDisplayMode = '12h' | '24h';
+
+interface Time {
+  sec: number;
+  oneMin: number;
+  tenMin: number;
+  hr: number;
+}
+
+interface WatchCaseMachineContext {
+  T: MainTime;
+  T1: Time;
+  T2: Time;
+  stopwatch: {
+    start: number | null;
+    elapsedBeforeStart: number;
+    elapsedTotal: number;
+    lap: number;
+  };
+  TICK_INTERVAL: number;
+  batteryPercentage: number;
+}
+
 const createTimeIncrementActions = function createTimeIncrementActions(
   name: 'T' | 'T1' | 'T2'
 ) {
   return {
-    [`increment${name}ByOneSec`]: assign({
+    [`increment${name}ByOneSec`]: assign<WatchCaseMachineContext>({
       [name]: (ctx) => ({
         ...ctx[name],
         sec: incrementByOneSec(ctx[name].sec),
       }),
     }),
-    [`increment${name}ByOneMin`]: assign({
+    [`increment${name}ByOneMin`]: assign<WatchCaseMachineContext>({
       [name]: (ctx) => ({
         ...ctx[name],
         oneMin: incrementByOneMin(ctx[name].oneMin),
       }),
     }),
-    [`increment${name}ByTenMin`]: assign({
+    [`increment${name}ByTenMin`]: assign<WatchCaseMachineContext>({
       [name]: (ctx) => ({
         ...ctx[name],
         tenMin: incrementByTenMin(ctx[name].tenMin),
       }),
     }),
-    [`increment${name}ByOneHour`]: assign({
+    [`increment${name}ByOneHour`]: assign<WatchCaseMachineContext>({
       [name]: (ctx) => ({
         ...ctx[name],
         hr: incrementByOneHour(ctx[name].hr),
@@ -171,31 +191,31 @@ const createTimeIncrementActions = function createTimeIncrementActions(
 };
 
 const dateIncrementActions = {
-  incrementTMonth: assign({
+  incrementTMonth: assign<WatchCaseMachineContext>({
     T: (ctx) => ({
       ...ctx.T,
       mon: incrementMonth(ctx.T.mon),
     }),
   }),
-  incrementTDate: assign({
+  incrementTDate: assign<WatchCaseMachineContext>({
     T: (ctx) => ({
       ...ctx.T,
       date: incrementDate(ctx.T.date, ctx.T.mon),
     }),
   }),
-  incrementTDay: assign({
+  incrementTDay: assign<WatchCaseMachineContext>({
     T: (ctx) => ({
       ...ctx.T,
       day: incrementDay(ctx.T.day),
     }),
   }),
-  incrementTYear: assign({
+  incrementTYear: assign<WatchCaseMachineContext>({
     T: (ctx) => ({
       ...ctx.T,
       year: incrementYear(ctx.T.year),
     }),
   }),
-  toggleClockMode: assign({
+  toggleClockMode: assign<WatchCaseMachineContext>({
     T: (ctx) => ({
       ...ctx.T,
       mode: ctx.T.mode === '24h' ? '12h' : '24h',
@@ -209,7 +229,7 @@ const timeIncrementActions = {
   ...createTimeIncrementActions('T2'),
 };
 
-const watchMachine = createMachine(
+const watchMachine = createMachine<WatchCaseMachineContext>(
   {
     id: 'watch',
     initial: 'alive',
@@ -907,7 +927,7 @@ const watchMachine = createMachine(
                                           elapsedTotal:
                                             stopwatch.elapsedBeforeStart +
                                             Date.now() -
-                                            stopwatch.start,
+                                            (stopwatch.start ?? 0),
                                         }),
                                       }),
                                     ],
@@ -1032,7 +1052,7 @@ const watchMachine = createMachine(
     },
     actions: {
       resetIdlenessTimer: send('RESET_IDLENESS_TIMER', { to: 'idlenessTimer' }),
-      resetStopwatch: assign({
+      resetStopwatch: assign<WatchCaseMachineContext>({
         stopwatch: INITIAL_STOPWATCH_CONTEXT,
       }),
       startStopwatch: assign({
@@ -1044,7 +1064,7 @@ const watchMachine = createMachine(
       pauseStopwatch: assign({
         stopwatch: ({ stopwatch }) => {
           const elapsed =
-            stopwatch.elapsedBeforeStart + Date.now() - stopwatch.start;
+            stopwatch.elapsedBeforeStart + Date.now() - (stopwatch.start ?? 0);
           return {
             ...stopwatch,
             elapsedBeforeStart: elapsed,
@@ -1055,7 +1075,8 @@ const watchMachine = createMachine(
       saveStopwatchLap: assign({
         stopwatch: ({ stopwatch }) => ({
           ...stopwatch,
-          lap: stopwatch.elapsedBeforeStart + Date.now() - stopwatch.start,
+          lap:
+            stopwatch.elapsedBeforeStart + Date.now() - (stopwatch.start ?? 0),
         }),
       }),
       clearStopwatchLap: assign({

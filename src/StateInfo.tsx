@@ -38,16 +38,16 @@ const StateInfo = function StateInfo({ state }) {
   });
 
   return (
-    <div className={cn('state-info')}>
-      <div className={cn('state-info-section')}>
-        <h3 className={cn('state-info-heading')}>Active states</h3>
-        <div className={cn('state-info-states')}>
+    <div className="state-info">
+      <div className="state-info-section">
+        <h3 className="state-info-heading">Active states</h3>
+        <div className="state-info-states">
           {state.toStrings().map(removeAlivePrefix).sort().join('\n')}
         </div>
       </div>
-      <div className={cn('state-info-section')}>
-        <h3 className={cn('state-info-heading')}>Extended state</h3>
-        <div className={cn('state-info-context')}>{contextInfoElements}</div>
+      <div className="state-info-section">
+        <h3 className="state-info-heading">Extended state</h3>
+        <div className="state-info-context">{contextInfoElements}</div>
       </div>
     </div>
   );

@@ -1,20 +1,15 @@
 import * as React from 'react';
 import happyPiggy from './assets/happy_piggy.png';
 import pig31Text from './assets/pig_31_text.svg';
-import cn from './classNames';
 
 const ProjectInfo = function ProjectInfo() {
   return (
-    <div className={cn('project-info')}>
-      <div className={cn('piggy-and-text')}>
-        <img
-          className={cn('happy-piggy')}
-          src={happyPiggy}
-          alt="A happy piggy"
-        />
-        <img className={cn('pig-31-text')} src={pig31Text} alt="Pig 31" />
+    <div className="project-info">
+      <div className="piggy-and-text">
+        <img className="happy-piggy" src={happyPiggy} alt="A happy piggy" />
+        <img className="pig-31-text" src={pig31Text} alt="Pig 31" />
       </div>
-      <div className={cn('description')}>
+      <div className="description">
         <p>
           A replica of the{' '}
           <a href="https://whichwatchtoday.blogspot.com/2013/02/citizen-quartz-multi-alarm-iii-41-3534.html">
